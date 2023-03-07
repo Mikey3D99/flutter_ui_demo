@@ -5,6 +5,7 @@ import 'package:flutter_ui_demo/constants/constants.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:camera/camera.dart';
 
 class AddPhotoWidget extends StatefulWidget {
   const AddPhotoWidget({Key? key}) : super(key: key);
@@ -15,6 +16,8 @@ class AddPhotoWidget extends StatefulWidget {
 
 class AddPhotoWidgetState extends State<AddPhotoWidget> {
   File? _image;
+  late CameraController _cameraController;
+  List<CameraDescription>? _cameras;
 
   void notification(String message) {
     Fluttertoast.showToast(
@@ -27,25 +30,58 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
         fontSize: 16.0);
   }
 
+  Future<void> initializeCamera() async {
+    _cameras = await availableCameras();
+    _cameraController = CameraController(
+      _cameras![0],
+      ResolutionPreset.low, // 4:3
+      enableAudio: false,
+    );
 
+    await _cameraController.initialize();
+    await _cameraController.setFlashMode(FlashMode.off); // flash off
+    await _cameraController.setExposureMode(ExposureMode.locked); //
+    await _cameraController.setExposureOffset(iso100); // 10 EV == ISO 100
+  }
 
-  Future getImage(ImageSource source) async {
-    if (source == ImageSource.gallery) {
-      notification(toastBetterImageQuality);
-    }
-    final pickedFile = await ImagePicker().pickImage(source: source);
+  @override
+  void initState() {
+    super.initState();
+    initializeCamera();
+  }
+
+  @override
+  void dispose() {
+    _cameraController.dispose();
+    super.dispose();
+  }
+
+  Future getImage() async {
+    notification(toastBetterImageQuality);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        if (source == ImageSource.gallery) {
           notification(toastNoImageSelected);
-        }
-        else{
-          notification(toastPhotoNotTaken);
-        }
       }
     });
+  }
+
+
+  Future capturePhoto() async {
+      try {
+        final XFile imageFile = await _cameraController.takePicture();
+        if (imageFile != null) {
+          setState(() {
+            _image = File(imageFile.path);
+          });
+        } else {
+          notification(toastPhotoNotTaken);
+        }
+      } catch (e) {
+        notification(toastCameraError);
+      }
   }
 
   @override
@@ -83,7 +119,7 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
                     width: 150,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () => getImage(ImageSource.gallery),
+                      onPressed: () => getImage(),
                       child: const Text(
                         importButtonText,
                         style: TextStyle(
@@ -98,7 +134,7 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
                     width: 150,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () => getImage(ImageSource.camera),
+                      onPressed: () => capturePhoto(),
                       child: const Icon(Icons.add_a_photo_outlined),
                     ),
                   ),
