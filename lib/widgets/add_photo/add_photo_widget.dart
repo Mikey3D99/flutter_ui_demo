@@ -27,6 +27,8 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
         fontSize: 16.0);
   }
 
+
+
   Future getImage(ImageSource source) async {
     if (source == ImageSource.gallery) {
       notification(toastBetterImageQuality);
