@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 const String loginButtonText = 'Zaloguj się';
 const String addPhotoButtonText = 'Dodaj zdjęcie';
@@ -7,4 +6,7 @@ const String inputPasswordText = 'Wprowadź hasło';
 const String forgotPasswordText = 'Zapomniałeś hasła?';
 const String newUserButtonText = 'Nowy użytkownik? Załóź konto!';
 const String importButtonText = 'Importuj';
+const String toastNoImageSelected = 'Nie wybrano żadnego zdjęcia!';
+const String toastBetterImageQuality = 'Lepsza jakość obrazu, będzie gdy zrobisz zdjęcie aparatem!';
+const String toastPhotoNotTaken = 'Nie zrobiono zdjęcia!';
 const double cornerRadius = 12.0;
