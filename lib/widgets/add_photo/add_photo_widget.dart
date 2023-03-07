@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_demo/widgets/add_photo/border_widget.dart';
 import 'package:flutter_ui_demo/widgets/background/background_widget.dart';
 import 'package:flutter_ui_demo/constants/constants.dart';
 import 'dart:io';
@@ -42,41 +43,14 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
         body: BackgroundContainer(
             child: Column(
                 children: [
-                  _image == null ? Container(
-                    margin: const EdgeInsets.all(10.0),
-                    width: screenHeight / 2,
-                    height: screenHeight / 2,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.white70,
-                        ),
-                        borderRadius: BorderRadius.circular(cornerRadius),
-                    ),
-                    child: LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) {
-                        return SizedBox(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight,
-                          child: Icon(
-                            Icons.image,
-                            color: Colors.white70,
-                            size: constraints.maxWidth * 0.3,
-                          ),
-                        );
-                      },
-                    ),
-                  ) : Container(
-                    margin: const EdgeInsets.all(10.0),
-                    width: screenHeight / 2,
-                    height: screenHeight / 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
+                  _image == null ? BorderContainer(
+                      child: Icon(
+                        Icons.image,
                         color: Colors.white70,
+                        size: (screenHeight / 6),
                       ),
-                      borderRadius: BorderRadius.circular(cornerRadius),
-                    ),
+                  )
+                   : BorderContainer(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(cornerRadius),
                       child: Image.file(
