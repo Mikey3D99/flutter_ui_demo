@@ -1,6 +1,6 @@
 # flutter_ui_demo
 
-Flutter exercise and my approach to it.
+Flutter exercise and my solution.
 
 ## The exercise (ENG):
 
