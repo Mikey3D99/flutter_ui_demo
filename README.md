@@ -1,16 +1,17 @@
 # flutter_ui_demo
 
-A new Flutter project.
+Flutter exercise and my approach to it.
 
-## Getting Started
+## The exercise:
 
-This project is a starting point for a Flutter application.
+Prepare a simple application template with the following features:
 
-A few resources to get you started if this is your first Flutter project:
+Homepage: add a login button and an add photo button.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The login button should display a screen with login credentials, password recovery, or registration options if the user does not have an account (do not implement actions on the buttons or change the view).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The add photo button should lead to a screen where the user can add a photo. It should allow the user to import photos from their phone's gallery. Upon importing a photo, there should be a message indicating that better quality photos can be taken using the app's camera feature.
+
+The second option for adding a photo is to take a photo using the camera widget. The camera should have default settings established by the application, such as ISO at 100, flash off, 2-second timer, and aspect ratio of 4:3.
+
+After adding a photo, a new window should open displaying the captured image.
