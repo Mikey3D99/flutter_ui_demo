@@ -1,16 +1,11 @@
 # flutter_ui_demo
 
-A new Flutter project.
+Showcase of basic flutter functionalities, using:
+image_picker: ^0.8.6+4
+fluttertoast: ^8.0.7
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This version has a different look from the main one - after adding a photo, we are instantly redirected to the previous widget which now contains the photo.
+Main version turns on a different page/view with the image itself.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
