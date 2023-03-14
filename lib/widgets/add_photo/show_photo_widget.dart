@@ -18,6 +18,7 @@ class ShowPhotoWidgetState extends State<ShowPhotoWidget> {
   late CameraController _cameraController;
   List<CameraDescription>? _cameras;
   File? _image;
+  bool _showCameraPreview = false;
 
 
 
@@ -33,7 +34,11 @@ class ShowPhotoWidgetState extends State<ShowPhotoWidget> {
       if (!mounted) {
         return;
       }
-      setState(() {});
+      setState(() {
+        if (_cameraController.value.isInitialized) {
+          _showCameraPreview = true;
+        }
+      });
     });
     await _cameraController.setFlashMode(FlashMode.off); // flash off
     await _cameraController.setExposureMode(ExposureMode.locked); //
@@ -77,7 +82,7 @@ class ShowPhotoWidgetState extends State<ShowPhotoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (_cameraController.value.isInitialized) {
+    if (_showCameraPreview) {
       return Scaffold(
           appBar: AppBar(
             title: const Text(showPhotoWidget),
@@ -106,7 +111,7 @@ class ShowPhotoWidgetState extends State<ShowPhotoWidget> {
           title: const Text(showPhotoWidget),
         ),
         body: const BackgroundContainer(
-          child: SizedBox(),
+          child: Center(child: CircularProgressIndicator()),
         ),
       );
     }
