@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_demo/widgets/background/background_widget.dart';
 import 'package:flutter_ui_demo/constants/constants.dart';
@@ -19,8 +18,6 @@ class ShowPhotoWidgetState extends State<ShowPhotoWidget> {
   List<CameraDescription>? _cameras;
   File? _image;
   bool _showCameraPreview = false;
-
-
 
   Future<void> initializeCamera() async {
     _cameras = await availableCameras();
@@ -73,11 +70,11 @@ class ShowPhotoWidgetState extends State<ShowPhotoWidget> {
     }
   }
 
-
-  void _redirectToAddPhotoWidget(BuildContext context) {Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>  AddPhotoWidget(imageFile: _image!)));
+  void _redirectToAddPhotoWidget(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddPhotoWidget(imageFile: _image!)));
   }
 
   @override
@@ -92,7 +89,9 @@ class ShowPhotoWidgetState extends State<ShowPhotoWidget> {
               child: Column(
                 children: [
                   CameraPreview(_cameraController),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   SizedBox(
                     width: 150,
                     height: 50,

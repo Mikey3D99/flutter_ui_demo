@@ -7,6 +7,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../home_page/home_page.dart';
+
 void notification(String message) {
   Fluttertoast.showToast(
       msg: message,
@@ -63,6 +65,15 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(addPhotoButtonText),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePage() ));
+            },
+          ),
         ),
         body: BackgroundContainer(
           child: Column(children: [
