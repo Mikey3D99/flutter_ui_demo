@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_demo/widgets/add_photo/border_widget.dart';
+import 'package:flutter_ui_demo/widgets/add_photo/show_photo_widget.dart';
 import 'package:flutter_ui_demo/widgets/background/background_widget.dart';
 import 'package:flutter_ui_demo/constants/constants.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:camera/camera.dart';
+
+void notification(String message) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
 
 class AddPhotoWidget extends StatefulWidget {
-  const AddPhotoWidget({Key? key}) : super(key: key);
+  final File imageFile;
+  const AddPhotoWidget({Key? key, required this.imageFile}) : super(key: key);
 
   @override
   AddPhotoWidgetState createState() => AddPhotoWidgetState();
@@ -16,45 +28,15 @@ class AddPhotoWidget extends StatefulWidget {
 
 class AddPhotoWidgetState extends State<AddPhotoWidget> {
   File? _image;
-  late CameraController _cameraController;
-  List<CameraDescription>? _cameras;
-
-  void notification(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
-
-  Future<void> initializeCamera() async {
-    _cameras = await availableCameras();
-    _cameraController = CameraController(
-      _cameras![0],
-      ResolutionPreset.low, // 4:3
-      enableAudio: false,
-    );
-
-    await _cameraController.initialize();
-    await _cameraController.setFlashMode(FlashMode.off); // flash off
-    await _cameraController.setExposureMode(ExposureMode.locked); //
-    await _cameraController.setExposureOffset(iso100); // 10 EV == ISO 100
-  }
 
   @override
   void initState() {
     super.initState();
-    initializeCamera();
+    if (widget.imageFile.existsSync()) {
+      _image = widget.imageFile;
+    }
   }
 
-  @override
-  void dispose() {
-    _cameraController.dispose();
-    super.dispose();
-  }
 
   Future getImage() async {
     notification(toastBetterImageQuality);
@@ -68,20 +50,10 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
     });
   }
 
-
-  Future capturePhoto() async {
-      try {
-        final XFile imageFile = await _cameraController.takePicture();
-        if (imageFile != null) {
-          setState(() {
-            _image = File(imageFile.path);
-          });
-        } else {
-          notification(toastPhotoNotTaken);
-        }
-      } catch (e) {
-        notification(toastCameraError);
-      }
+  void _handleCapture(BuildContext context) {Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const ShowPhotoWidget()));
   }
 
   @override
@@ -134,7 +106,7 @@ class AddPhotoWidgetState extends State<AddPhotoWidget> {
                     width: 150,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () => capturePhoto(),
+                      onPressed: () => _handleCapture(context),
                       child: const Icon(Icons.add_a_photo_outlined),
                     ),
                   ),

@@ -10,5 +10,6 @@ const String toastNoImageSelected = 'Nie wybrano żadnego zdjęcia!';
 const String toastBetterImageQuality = 'Lepsza jakość obrazu, będzie gdy zrobisz zdjęcie aparatem!';
 const String toastPhotoNotTaken = 'Nie zrobiono zdjęcia!';
 const String toastCameraError = 'Error!';
+const String showPhotoWidget = 'Pokaż Zdjęcie';
 const double cornerRadius = 12.0;
 const double iso100 = 10;
